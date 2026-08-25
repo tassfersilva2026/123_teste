@@ -502,7 +502,11 @@
       <a href="#como-funciona">Como funciona</a>
       <a href="#trilhas">Trilhas</a>
       <a href="#preco">Preço</a>
-      <a href="login.html" style="font-weight:700; font-size:14px; color:var(--ash); letter-spacing:0.04em;">Entrar</a>
+      <div id="authMenu" style="display: flex; align-items: center; gap: 16px;">
+        <a id="loginBtn" href="login.html" style="font-weight:700; font-size:14px; color:var(--ash); letter-spacing:0.04em;">Entrar</a>
+        <span id="userEmail" style="display: none; font-weight:700; font-size:14px; color:var(--charcoal);"></span>
+        <button id="logoutBtn" style="display: none; background:none; border:none; font-weight:700; font-size:14px; color:#EA4335; letter-spacing:0.04em; cursor:pointer;">Sair</button>
+      </div>
     </div>
   </div>
 </nav>
@@ -801,6 +805,51 @@
   pedir();
 })();
 
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC6c5wHgzjLtJlx_4bYvlFUVW7jKjJk-_k",
+    authDomain: "tasia-login-ca412.firebaseapp.com",
+    projectId: "tasia-login-ca412",
+    storageBucket: "tasia-login-ca412.firebasestorage.app",
+    messagingSenderId: "459269823564",
+    appId: "1:459269823564:web:0e3b871e06dab1cc41a8e9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const loginBtn = document.getElementById('loginBtn');
+  const userEmail = document.getElementById('userEmail');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Observa se o usuário está logado
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // Logado: esconde "Entrar", mostra e-mail e "Sair"
+      loginBtn.style.display = 'none';
+      userEmail.style.display = 'inline-block';
+      userEmail.textContent = user.email || 'Usuário Logado';
+      logoutBtn.style.display = 'inline-block';
+    } else {
+      // Não logado: mostra "Entrar", esconde o resto
+      loginBtn.style.display = 'inline-block';
+      userEmail.style.display = 'none';
+      logoutBtn.style.display = 'none';
+    }
+  });
+
+  // Ação de Sair
+  logoutBtn.addEventListener('click', () => {
+    signOut(auth).then(() => {
+      localStorage.removeItem('loginTime');
+    }).catch((error) => {
+      alert("Erro ao sair: " + error.message);
+    });
+  });
 </script>
 </body>
 </html>
