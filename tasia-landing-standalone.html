@@ -846,6 +846,7 @@
   logoutBtn.addEventListener('click', () => {
     signOut(auth).then(() => {
       localStorage.removeItem('loginTime');
+      window.location.href = "login.html";
     }).catch((error) => {
       alert("Erro ao sair: " + error.message);
     });
