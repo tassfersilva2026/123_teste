@@ -255,26 +255,6 @@
         <p>Bem-vindo(a) de volta!</p>
       </div>
 
-      <form id="loginForm" onsubmit="window.loginEmail(event)">
-        <div class="input-group">
-          <label for="email">E-mail</label>
-          <input type="email" id="email" placeholder="seu@email.com" required>
-        </div>
-        
-        <div class="input-group">
-          <label for="password">Senha</label>
-          <input type="password" id="password" placeholder="••••••••" required>
-        </div>
-
-        <div class="extra-links">
-          <a href="#" style="margin-left: auto;">Esqueci a senha</a>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Entrar com Senha</button>
-      </form>
-
-      <div class="divider">OU</div>
-
       <button type="button" class="btn btn-google" onclick="window.loginGoogle()">
         <svg width="20" height="20" viewBox="0 0 48 48">
           <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.73 17.74 9.5 24 9.5z"/>
@@ -360,31 +340,6 @@
     }
   };
 
-  // Email/Senha Login
-  window.loginEmail = async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const pass = document.getElementById('password').value;
-    
-    try {
-      await setPersistence(auth, browserLocalPersistence);
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-      } catch (err) {
-        if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
-          // Cria conta se não existir
-          await createUserWithEmailAndPassword(auth, email, pass);
-        } else {
-          throw err;
-        }
-      }
-      setLoginSession();
-      // Redirecionamento forçando versão mais nova para evitar cache
-      window.location.href = "tasia-landing-standalone.html?v=" + new Date().getTime();
-    } catch (error) {
-      alert("Erro: " + error.message);
-    }
-  };
 </script>
 </body>
 </html>
