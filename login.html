@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tasIA — Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&family=Inter:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ecto-green: #58cc02;
+    --ecto-green-dark: #4bab02;
+    --lingot-lime: #a5ed6e;
+    --eel-light: #d7ffb8;
+    --macaw-blue: #1cb0f6;
+    --macaw-blue-dark: #1899d6;
+    --eel-dark-blue: #042c60;
+    --midnight: #000437;
+    --charcoal: #4b4b4b;
+    --ash: #777777;
+    --paper: #ffffff;
+    --radius: 12px;
+    --font-body: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--charcoal);
+    background: var(--paper);
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Layout de tela dividida (Split Screen) para aproveitar o espaço máximo */
+  .login-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+  }
+
+  /* Lado esquerdo: Branding/Banner */
+  .login-banner {
+    flex: 1;
+    background: var(--eel-dark-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: white;
+    text-align: center;
+  }
+
+  .login-banner h1 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .login-banner h1 span {
+    color: var(--ecto-green);
+  }
+
+  .login-banner p {
+    font-size: 20px;
+    max-width: 500px;
+    line-height: 1.5;
+    color: #cfe0f0;
+  }
+
+  /* Lado direito: Formulário */
+  .login-form-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fafafa;
+    padding: 40px;
+  }
+
+  .form-wrapper {
+    width: 100%;
+    max-width: 450px;
+    background: var(--paper);
+    padding: 40px;
+    border-radius: var(--radius);
+    border: 2px solid #e5e5e5;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .form-header h2 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--eel-dark-blue);
+    margin-bottom: 10px;
+  }
+
+  .form-header p {
+    color: var(--ash);
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* Botões e Inputs */
+  .input-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .input-group label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--charcoal);
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e5e5e5;
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    transition: border-color 0.2s ease;
+  }
+
+  .input-group input:focus {
+    outline: none;
+    border-color: var(--macaw-blue);
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.08s ease, filter 0.08s ease;
+    margin-bottom: 12px;
+  }
+
+  .btn-primary {
+    background: var(--ecto-green);
+    color: #ffffff;
+    border-bottom: 4px solid var(--ecto-green-dark);
+  }
+  .btn-primary:hover { filter: brightness(1.05); }
+  .btn-primary:active { border-bottom-width: 0px; transform: translateY(4px); margin-bottom: 16px; }
+
+  .btn-google {
+    background: #ffffff;
+    color: var(--charcoal);
+    border: 2px solid #e5e5e5;
+    border-bottom: 4px solid #d5d5d5;
+    gap: 10px;
+  }
+  .btn-google:hover { background: #f9f9f9; }
+  .btn-google:active { border-bottom-width: 2px; transform: translateY(2px); margin-bottom: 14px;}
+
+  .btn-email-code {
+    background: var(--macaw-blue);
+    color: #ffffff;
+    border-bottom: 4px solid var(--macaw-blue-dark);
+  }
+  .btn-email-code:hover { filter: brightness(1.05); }
+  .btn-email-code:active { border-bottom-width: 0px; transform: translateY(4px); margin-bottom: 16px;}
+
+  .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 24px 0;
+    color: var(--ash);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 2px solid #e5e5e5;
+  }
+  .divider:not(:empty)::before { margin-right: 10px; }
+  .divider:not(:empty)::after { margin-left: 10px; }
+
+  .extra-links {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: -10px;
+    margin-bottom: 24px;
+  }
+  .extra-links a { color: var(--macaw-blue-dark); text-decoration: none; }
+  .extra-links a:hover { text-decoration: underline; }
+  
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--charcoal);
+    cursor: pointer;
+  }
+  .checkbox-group input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--ecto-green);
+  }
+
+  @media (max-width: 900px) {
+    .login-container { flex-direction: column; }
+    .login-banner { display: none; } /* Oculta o banner em telas menores para focar no login */
+    .login-form-section { padding: 20px; }
+    .form-wrapper { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <!-- Banner esquerdo (Visão ampla para ocupar espaço da tela) -->
+  <div class="login-banner">
+    <h1>tas<span>IA</span></h1>
+    <p>Acesse sua conta e continue criando seus agentes de inteligência artificial de forma simples e rápida.</p>
+  </div>
+
+  <!-- Formulário direito -->
+  <div class="login-form-section">
+    <div class="form-wrapper">
+      <div class="form-header">
+        <h2>Entrar</h2>
+        <p>Bem-vindo(a) de volta!</p>
+      </div>
+
+      <form id="loginForm" onsubmit="window.loginEmail(event)">
+        <div class="input-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="seu@email.com" required>
+        </div>
+        
+        <div class="input-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="extra-links">
+          <label class="checkbox-group">
+            <input type="checkbox" id="rememberMe" checked>
+            Lembrar-me (7 dias)
+          </label>
+          <a href="#">Esqueci a senha</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Entrar com Senha</button>
+      </form>
+
+      <div class="divider">OU</div>
+
+      <button type="button" class="btn btn-google" onclick="window.loginGoogle()">
+        <svg width="20" height="20" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.73 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.15 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Entrar com Google
+      </button>
+
+      <button type="button" class="btn btn-email-code" onclick="window.sendEmailCode()">
+        Receber Código por E-mail
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { 
+    getAuth, 
+    setPersistence, 
+    browserLocalPersistence, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider, 
+    signInWithPopup, 
+    sendSignInLinkToEmail, 
+    isSignInWithEmailLink, 
+    signInWithEmailLink 
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC6c5wHgzjLtJlx_4bYvlFUVW7jKjJk-_k",
+    authDomain: "tasia-login-ca412.firebaseapp.com",
+    projectId: "tasia-login-ca412",
+    storageBucket: "tasia-login-ca412.firebasestorage.app",
+    messagingSenderId: "459269823564",
+    appId: "1:459269823564:web:0e3b871e06dab1cc41a8e9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Controle de Sessão (máx 7 dias)
+  const checkSession = () => {
+    const loginTime = localStorage.getItem('loginTime');
+    if (loginTime) {
+      const daysPassed = (Date.now() - parseInt(loginTime)) / (1000 * 60 * 60 * 24);
+      if (daysPassed > 7) {
+        auth.signOut();
+        localStorage.removeItem('loginTime');
+      }
+    }
+  };
+  checkSession();
+
+  const setLoginSession = () => {
+    localStorage.setItem('loginTime', Date.now().toString());
+  };
+
+  // Google Login
+  window.loginGoogle = async () => {
+    try {
+      await setPersistence(auth, browserLocalPersistence);
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      setLoginSession();
+      alert("Login com Google efetuado com sucesso!");
+    } catch (error) {
+      alert("Erro no Google: " + error.message);
+    }
+  };
+
+  // Email/Senha Login
+  window.loginEmail = async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('password').value;
+    
+    try {
+      await setPersistence(auth, browserLocalPersistence);
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+      } catch (err) {
+        if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
+          // Cria conta se não existir
+          await createUserWithEmailAndPassword(auth, email, pass);
+        } else {
+          throw err;
+        }
+      }
+      setLoginSession();
+      alert("Login efetuado com sucesso!");
+    } catch (error) {
+      alert("Erro: " + error.message);
+    }
+  };
+
+  // Enviar Código Email
+  window.sendEmailCode = async () => {
+    const email = document.getElementById('email').value;
+    if (!email) {
+      alert("Por favor, digite seu e-mail no campo acima primeiro.");
+      return;
+    }
+    const actionCodeSettings = {
+      url: window.location.href,
+      handleCodeInApp: true
+    };
+    try {
+      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+      window.localStorage.setItem('emailForSignIn', email);
+      alert("Link de login enviado para seu e-mail!");
+    } catch (error) {
+      alert("Erro ao enviar link: " + error.message);
+    }
+  };
+
+  // Verificar login por link de e-mail ao carregar a página
+  if (isSignInWithEmailLink(auth, window.location.href)) {
+    let email = window.localStorage.getItem('emailForSignIn');
+    if (!email) {
+      email = window.prompt('Por favor, confirme seu e-mail para completar o login');
+    }
+    signInWithEmailLink(auth, email, window.location.href)
+      .then((result) => {
+        window.localStorage.removeItem('emailForSignIn');
+        setLoginSession();
+        alert("Login com código efetuado com sucesso!");
+      })
+      .catch((error) => {
+        alert("Erro no login por código: " + error.message);
+      });
+  }
+</script>
+</body>
+</html>
