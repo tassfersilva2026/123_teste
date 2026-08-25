@@ -341,8 +341,8 @@
         }
       }
       setLoginSession();
-      // Redirecionamento sem pop-up
-      window.location.href = "tasia-landing-standalone.html";
+      // Redirecionamento forçando versão mais nova para evitar cache
+      window.location.href = "tasia-landing-standalone.html?v=" + new Date().getTime();
     } catch (error) {
       alert("Erro: " + error.message);
     }
