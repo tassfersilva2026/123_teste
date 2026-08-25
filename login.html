@@ -348,6 +348,7 @@
       await signInWithPopup(auth, provider);
       setLoginSession();
       alert("Login com Google efetuado com sucesso!");
+      window.location.href = "tasia-landing-standalone.html";
     } catch (error) {
       alert("Erro no Google: " + error.message);
     }
@@ -373,6 +374,7 @@
       }
       setLoginSession();
       alert("Login efetuado com sucesso!");
+      window.location.href = "tasia-landing-standalone.html";
     } catch (error) {
       alert("Erro: " + error.message);
     }
@@ -409,6 +411,7 @@
         window.localStorage.removeItem('emailForSignIn');
         setLoginSession();
         alert("Login com código efetuado com sucesso!");
+        window.location.href = "tasia-landing-standalone.html";
       })
       .catch((error) => {
         alert("Erro no login por código: " + error.message);
